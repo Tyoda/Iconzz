@@ -1,0 +1,52 @@
+
+plugins {
+    id 'idea'
+    id 'java'
+}
+
+group 'org.tyoda.wurmunlimited.mods.Iconzz'
+version '0.1'
+
+repositories {
+    mavenCentral()
+    maven { url "http://gotti.no-ip.org/maven/repository"; allowInsecureProtocol(true) }
+    maven { url 'https://jitpack.io' }
+}
+
+
+var serverJar = files("/media/tyoda/Files/w/p/wurmmods/libraries/server.jar")
+var commonJar = files("/media/tyoda/Files/w/p/wurmmods/libraries/common.jar")
+
+dependencies {
+    if(serverJar){
+        implementation(serverJar)
+    }else{
+        implementation 'org.gotti.wurmunlimited:server:3720466'
+    }
+    if(commonJar){
+        implementation(commonJar)
+    }else{
+        implementation 'org.gotti.wurmunlimited:common:3720466'
+    }
+    compileOnly 'org.gotti.wurmunlimited:server-modlauncher:0.45'
+    compileOnly 'com.github.Tyoda:CommonLibrary:0.0.6'
+    compileOnly 'org.gotti.wurmunlimited:httpserver:0.45'
+    compileOnly 'org.gotti.wurmunlimited:serverpacks:0.45'
+}
+
+jar {
+    archiveFileName = "${project.name}.jar"
+}
+
+task dist(type: Zip) {
+    into("mods", {
+        into(project.name, {
+            from jar
+            into("resources", {
+                from fileTree(dir: "mods/${project.name}/resources", include: '*')
+            })
+        })
+        from fileTree(dir: 'mods', include: '*')
+    })
+    archiveFileName = "${project.name}-${project.version}.zip"
+}

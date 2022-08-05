@@ -1,0 +1,8 @@
+
+img.iconsheet.armor     = armor.png
+img.iconsheet.icons     = icons.png
+img.iconsheet.misc      = misc.png
+img.iconsheet.resource  = resource.png
+img.iconsheet.resource2 = resource2.png
+img.iconsheet.tools     = tools.png
+img.iconsheet.weapons   = weapons.png
