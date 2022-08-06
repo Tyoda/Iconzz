@@ -18,7 +18,7 @@ You can then use this ID while creating item templates to use the newly added ic
 
 For an example, see the <a href="https://github.com/Tyoda/IconzzExample">Example mod</a>
 
-NOTE: The images must be 32x32
+NOTE: The icon images must be 32x32, and the IconName in addIcon must be unique among all mods that use this library.
 
 ### Additional improvements to the icons in the game:
  - Huge Bell will now have an icon
