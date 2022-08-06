@@ -4,8 +4,8 @@ plugins {
     id 'java'
 }
 
-group 'org.tyoda.wurmunlimited.mods.Iconzz'
-version '0.1'
+group 'org.tyoda.wurm.Iconzz'
+version '0.1.1'
 
 repositories {
     mavenCentral()
@@ -16,6 +16,7 @@ repositories {
 
 var serverJar = files("/media/tyoda/Files/w/p/wurmmods/libraries/server.jar")
 var commonJar = files("/media/tyoda/Files/w/p/wurmmods/libraries/common.jar")
+var serverPacks = files("/media/tyoda/Files/w/p/wurmmods/libraries/serverpacks.jar")
 
 dependencies {
     if(serverJar){
@@ -28,10 +29,12 @@ dependencies {
     }else{
         implementation 'org.gotti.wurmunlimited:common:3720466'
     }
+    if(serverPacks){
+        implementation(serverPacks)
+    }else{
+        implementation 'org.gotti.wurmunlimited:common:3720466'
+    }
     compileOnly 'org.gotti.wurmunlimited:server-modlauncher:0.45'
-    compileOnly 'com.github.Tyoda:CommonLibrary:0.0.6'
-    compileOnly 'org.gotti.wurmunlimited:httpserver:0.45'
-    compileOnly 'org.gotti.wurmunlimited:serverpacks:0.45'
 }
 
 jar {

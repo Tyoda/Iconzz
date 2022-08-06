@@ -1,9 +1,8 @@
 package org.tyoda.wurm.Iconzz;
 
-import org.gotti.wurmunlimited.modloader.interfaces.Initable;
-import org.gotti.wurmunlimited.modloader.interfaces.PreInitable;
-import org.gotti.wurmunlimited.modloader.interfaces.Versioned;
-import org.gotti.wurmunlimited.modloader.interfaces.WurmServerMod;
+import com.wurmonline.server.Servers;
+import org.gotti.wurmunlimited.modloader.interfaces.*;
+import org.gotti.wurmunlimited.mods.serverpacks.api.ServerPacks;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -15,8 +14,8 @@ import java.util.logging.Logger;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
-public class Iconzz implements WurmServerMod, Initable, Versioned, PreInitable {
-    public static final String version = "0.1";
+public class Iconzz implements WurmServerMod, Initable, Versioned, PreInitable, ServerStartedListener {
+    public static final String version = "0.1.1";
     public static final Logger logger = Logger.getLogger(Iconzz.class.getName());
 
     /**
@@ -35,6 +34,11 @@ public class Iconzz implements WurmServerMod, Initable, Versioned, PreInitable {
     public static final File tempDir = Paths.get(modDirectory, "temp").toFile();
 
     /**
+     * The iconzz serverpack relative to the server root
+     */
+    public static final Path iconzzPackPath = Paths.get(modDirectory, "iconzz-pack.jar").toAbsolutePath();
+
+    /**
      * An array to store the seven edited icon sheets
      */
     private BufferedImage[] sheetImages = new BufferedImage[7];
@@ -47,7 +51,7 @@ public class Iconzz implements WurmServerMod, Initable, Versioned, PreInitable {
     ));
 
     /**
-     * Every Icon stored with each one's name mapped to its ID
+     * Each custom icon's name mapped to its ID
      */
     private final HashMap<String, Short> customIcons = new HashMap<>();
 
@@ -60,7 +64,7 @@ public class Iconzz implements WurmServerMod, Initable, Versioned, PreInitable {
      * Whether init has run yet
      */
     private boolean inited = false;
-    private final Iconzz instance;
+    private static Iconzz instance;
 
     public Iconzz(){
         instance = this;
@@ -116,8 +120,6 @@ public class Iconzz implements WurmServerMod, Initable, Versioned, PreInitable {
                 ImageIO.write(sheetImages[i], "png", Paths.get(tempDir.toString(), sheetNamesInOrder[i]).toFile());
             }
 
-            Path iconzzPackPath = Paths.get(modDirectory, "iconzz-pack.jar").toAbsolutePath();
-
             File iconzzPackFile = iconzzPackPath.toFile();
             if(!iconzzPackFile.exists() || iconzzPackFile.delete()){
                 if(!iconzzPackFile.createNewFile())
@@ -154,17 +156,33 @@ public class Iconzz implements WurmServerMod, Initable, Versioned, PreInitable {
         inited = true;
     }
 
+    @Override
+    public void onServerStarted() {
+        try {
+            byte[] jarBytes = Files.readAllBytes(iconzzPackPath);
+            ServerPacks.getInstance().addServerPack("iconzz-" + Servers.localServer.getName(),
+                    jarBytes,
+                    ServerPacks.ServerPackOptions.FORCE, ServerPacks.ServerPackOptions.PREPEND);
+        }
+        catch(IOException e){
+            throw new RuntimeException(e);
+        }
+    }
+
     /**
      * This method should be called in preInit() to register a new icon
      * @param name Name of the icon. Must be unique.
      * @param path Path of the image file relative to Server root e.g.: mods/ModName/modIcon.png
-     * @return The ID of the registered icon, or -1 if an icon with that name already exists
-     *         or there is no more space to register new icons or function was called after preInit
+     * @return The ID of the registered icon, or -1 if there is no more space to register new icons
+     *         or function was called after preInit
      */
     public short addIcon(String name, String path){
         try {
             if (inited || freeSpaces.size() == 0)
                 return -1;
+
+            if(customIcons.containsKey(name))
+                return customIcons.get(name);
 
             if (!preInited) {
                 preInit();
@@ -211,7 +229,7 @@ public class Iconzz implements WurmServerMod, Initable, Versioned, PreInitable {
         return version;
     }
 
-    public Iconzz getInstance() {
+    public static Iconzz getInstance() {
         return instance;
     }
 }
