@@ -5,34 +5,24 @@ plugins {
 }
 
 group 'org.tyoda.wurm.Iconzz'
-version '0.1.1'
+version '0.1.2'
 
 repositories {
     mavenCentral()
-    maven { url "http://gotti.no-ip.org/maven/repository"; allowInsecureProtocol(true) }
+    maven { url "https://gotti.no-ip.org/maven/repository" }
     maven { url 'https://jitpack.io' }
 }
 
 
 var serverJar = files("/media/tyoda/Files/w/p/wurmmods/libraries/server.jar")
 var commonJar = files("/media/tyoda/Files/w/p/wurmmods/libraries/common.jar")
-var serverPacks = files("/media/tyoda/Files/w/p/wurmmods/libraries/serverpacks.jar")
 
 dependencies {
     if(serverJar){
         implementation(serverJar)
-    }else{
-        implementation 'org.gotti.wurmunlimited:server:3720466'
     }
     if(commonJar){
         implementation(commonJar)
-    }else{
-        implementation 'org.gotti.wurmunlimited:common:3720466'
-    }
-    if(serverPacks){
-        implementation(serverPacks)
-    }else{
-        implementation 'org.gotti.wurmunlimited:common:3720466'
     }
     compileOnly 'org.gotti.wurmunlimited:server-modlauncher:0.45'
 }
