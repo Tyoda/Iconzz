@@ -24,3 +24,6 @@ NOTE: The icon images must be 32x32, and the IconName in addIcon must be unique 
  - Huge Bell will now have an icon
  - Golden Mirror will now have an icon
  - Removed weird random lines on the borders of some icons
+
+# Credits
+ - Many thanks to bdew for figuring out how to use serverpacks functions in the sharedClassLoader context, as seen in this <a href="https://gist.github.com/bdew/5ee9fcb39da73405a38810116104e101">TestMod</a>
