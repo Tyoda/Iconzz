@@ -1,6 +1,9 @@
 # Iconzz
 A small mod API allowing the easy use of custom icons in the game.
 
-Currently a mod can call addIcon() in the preInit phase, and the icon will be loaded and everything will work perfectly.
+Currently a mod can call addIcon() before the onServerStarted phase, and the icon will be loaded onto the appropriate icon sheet.
 
-The issue is that it generates a new pack each time the server is started, meaning unused packs willl slowly pile up on every player's disk.
+Since we're editing the icons sheets anyway, we fixed a few problems, such as
+ - Huge bell had no icon
+ - Golden mirror had no icon
+ - Random lines below halberd
