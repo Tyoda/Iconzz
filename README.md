@@ -3,6 +3,7 @@ A small mod API allowing the easy use of custom icons in the game.
 
 You need ago's server modlauncher for this to work.
 
+NOTE: This mod will not be compatible with any other mods that use icons without using this library. However, the worst that should happen is either this or the other mod's icons will show up as weird, random icons. If you find such a mod, please report it here and we'll figure something out. Currently <a href="https://github.com/Arathok/Wurm-Unlimited-Alchemy">Arathok's Alchemy mod</a> (version 0.8.9) is known not to be compatible.
 # Features
 Add a new icon to the game by simply adding this mod as a library in your .properties file:
 
