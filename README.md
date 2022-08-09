@@ -15,7 +15,7 @@ And adding one line in the code:
 
 You can then use this ID while creating item templates to use the newly added icon:
 
-`ItemTemplateBuilder exampleItem = new ItemTemplateBuilder("ExampleItem").imageNumber(iconId)`
+`ItemTemplateBuilder exampleItem = new ItemTemplateBuilder("ExampleItem").imageNumber(iconId);`
 
 For an example, see the <a href="https://github.com/Tyoda/IconzzExample">Example mod</a>
 
@@ -25,6 +25,8 @@ NOTE: The icon images must be 32x32, and the IconName in addIcon must be unique 
  - Huge Bell will now have an icon
  - Golden Mirror will now have an icon
  - Removed weird random lines on the borders of some icons
+ - Removed default icon cube from behind the muffin icon lol
+ - You can edit the images in the mod's resources folder to customize the game's icons to your liking!
 
 # Credits
  - Many thanks to bdew for figuring out how to use serverpacks functions in the sharedClassLoader context, as seen in this <a href="https://gist.github.com/bdew/5ee9fcb39da73405a38810116104e101">TestMod</a>
