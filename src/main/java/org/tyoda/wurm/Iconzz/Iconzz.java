@@ -17,7 +17,7 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
 public class Iconzz implements WurmServerMod, Versioned, ServerStartedListener, ModListener {
-    public static final String version = "0.1.3";
+    public static final String version = "0.1.3.1";
     public static final Logger logger = Logger.getLogger(Iconzz.class.getName());
 
     /**
@@ -173,7 +173,7 @@ public class Iconzz implements WurmServerMod, Versioned, ServerStartedListener, 
                 Array.set(opts, 0, optionPrepend);
                 Array.set(opts, 1, optionForce);
                 ReflectionUtil.getMethod(serverPacks.getClass(), "addServerPack", new Class[]{String.class, byte[].class, opts.getClass()})
-                        .invoke(serverPacks, "iconzz-"+Servers.localServer.getName(), Files.readAllBytes(iconzzPackPath), opts);
+                        .invoke(serverPacks, "iconzz-pack", Files.readAllBytes(iconzzPackPath), opts);
             } catch (IOException | InvocationTargetException | IllegalAccessException | NoSuchMethodException e) {
                 throw new RuntimeException(e);
             }
